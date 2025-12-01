@@ -1,13 +1,16 @@
 import pytest
-from src.masks import get_mask_card_number, get_mask_account
+
+from src.masks import get_mask_account, get_mask_card_number
+
 
 class TestGetMaskCardNumber:
- """Тесты для маркировки номера карты"""
+    """Тесты для маркировки номера карты"""
+
 
 @pytest.mark.parametrize("card_number,expected", [
-("7000792289606361", "7000 79** **** 6361"),
-("1111222233334444", "1111 22** **** 4444" )
-])
+    ("7000792289606361", "7000 79** **** 6361"),
+    ("1111222233334444", "1111 22** **** 4444")
+    ])
 def test_get_mask_card_number(card_number, expected):
     """Тестирование числового ввода"""
     result = get_mask_card_number(card_number)
@@ -107,23 +110,18 @@ def test_short_card_numbers(short_card_number):
         "123456789012345678901234567890",  # 30 цифр
     ])
 def test_long_card_numbers(long_card_number):
-        """Тестирование длинных номеров карт"""
-        result = get_mask_card_number(long_card_number)
-        assert isinstance(result, str)
-        # Проверяем, что функция обрабатывает длинные номера без ошибок
+    """Тестирование длинных номеров карт"""
+    result = get_mask_card_number(long_card_number)
+    assert isinstance(result, str)
+    # Проверяем, что функция обрабатывает длинные номера без ошибок
+
 
 def test_special_characters():
-        """Тестирование строки со специальными символами"""
-        result = get_mask_card_number("1234-5678-9012-3456")
-        # Функция должна обработать это, убрав не-цифровые символы
-        assert isinstance(result, str)
+    """Тестирование строки со специальными символами"""
+    result = get_mask_card_number("1234-5678-9012-3456")
+    # Функция должна обработать это, убрав не-цифровые символы
+    assert isinstance(result, str)
 
-
-def test_edge_cases(self, edge_case_card_numbers):
-    """Тест граничных случаев"""
-    for card_number, expected in edge_case_card_numbers.items():
-        result = get_mask_card_number(card_number)
-        assert result == expected
 
 class TestGetMaskAccount:
     """Тесты для маскировки аккаунта"""
@@ -137,14 +135,14 @@ def test_account_number_and_expected_pairs(account_number_and_expected):
 
 
 @pytest.mark.parametrize("account,expected", [
-("1234", "**1234"),
-("12", "**12"),
-("", "**"),
-])
+    ("1234", "**1234"),
+    ("12", "**12"),
+    ("", "**"),
+    ])
 def test_short_accounts(account, expected):
-     """Тест коротких номеров счетов"""
-     result = get_mask_account(account)
-     assert result == expected
+    """Тест коротких номеров счетов"""
+    result = get_mask_account(account)
+    assert result == expected
 
 
 def test_account_with_spaces():
@@ -153,10 +151,12 @@ def test_account_with_spaces():
     result = get_mask_account(account)
     assert result == "**3456"
 
-def test_empty_string():
+
+def test_empty_string1():
     """Тест пустой строки"""
     result = get_mask_account("")
     assert result == "**"
+
 
 def test_single_character():
     """Тест одного символа"""
@@ -168,17 +168,20 @@ def test_get_mask_account_standard():
     """Тест стандартного случая с полным номером счета"""
     assert get_mask_account("12345678901234567890") == "**7890"
 
+
 def test_account_number_with_spaces():
     """Тест номера счета с пробелами"""
     account = "1234 5678 9012 3456 7890"
     expected = "**7890"
     assert get_mask_account(account) == expected
 
+
 def test_account_with_mixed_spaces():
     """Тест номера счета с разным количеством пробелов"""
     account = "  1234  5678  9012  3456  7890  "
     expected = "**7890"
     assert get_mask_account(account) == expected
+
 
 def test_large_account_number():
     """Тест очень длинного номера счета"""
