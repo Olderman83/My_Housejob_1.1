@@ -1,5 +1,7 @@
 import pytest
-from src.widget import mask_account_card, get_date
+
+from src.widget import get_date, mask_account_card
+
 
 class TestMaskAccountCard:
     """Тесты для функции mask_account_card"""
@@ -49,7 +51,6 @@ class TestMaskAccountCard:
         for input_text, expected_name in test_cases:
             result = mask_account_card(input_text)
             assert result.startswith(expected_name)
-
 
 
 class TestGetDate:

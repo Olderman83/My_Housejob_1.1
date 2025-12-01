@@ -1,14 +1,15 @@
-import pytest
-from datetime import datetime, timedelta
-from typing import List, Dict, Any
 from datetime import date
+from typing import Any, Dict, List
+
+import pytest
+
 
 @pytest.fixture
 def card_numbers_with_spaces():
     """Фикстура для номеров с различным количеством пробелов"""
     return [("70007922 89606361", "7000 79** **** 6361"),
             ("70 00 79 22 89 60 63 61", "7000 79** **** 6361"),
-            ("7000 7922 8960 6361", "7000 79** **** 6361") ]
+            ("7000 7922 8960 6361", "7000 79** **** 6361")]
 
 
 @pytest.fixture
@@ -22,6 +23,7 @@ def account_number_and_expected():
         ("00001111222233334444", "**4444"),
         ("9999", "**9999"),
     ]
+
 
 @pytest.fixture
 def card_data():
@@ -82,6 +84,7 @@ def only_canceled_transactions() -> List[Dict[str, Any]]:
         {"id": 1, "state": "CANCELED", "amount": 100},
         {"id": 2, "state": "CANCELED", "amount": 200},
     ]
+
 
 @pytest.fixture
 def sample_transactions() -> List[Dict[str, Any]]:
