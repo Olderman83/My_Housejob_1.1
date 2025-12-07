@@ -55,6 +55,10 @@ number_part = card_info_part[-1]
  def sort_by_date(dict_list: List[Dict[str, Any]], reverse: bool = True) -> List[Dict[str, Any]]:
  return sorted(dict_list, key=lambda x: x["date"], reverse=reverse)
 
+##Модуль generators 
+Модуль, который содержит функции для работы с массивами транзакций через генераторы.
+
+
 
 #Тестирование
 Пакет tests содержит модули для тестирования кодов маскирования и сортировки карт.
@@ -113,10 +117,32 @@ def test_basic_date_conversion(self, sample_date_1):
     result = get_date(sample_date_1)
     assert result == "11.03.2024"
 
+##Модуль tests_generators
+filter_by_currency, transaction_descriptions, card_number_generator
+Пример:
+    def test_empty_transaction_list(self) -> None:
+        """Тест с пустым списком транзакций"""
+        result = list(filter_by_currency([], "USD"))
+        assert len(result) == 0
+
+    def test_with_fixture_transactions(self, sample_transactions1) -> None:
+        """Тест с фикстурой из conftest.py"""
+        result = list(transaction_descriptions(sample_transactions1))
+        expected = ['Покупка', 'Продажа', 'Перевод']
+        assert result == expected
+
+    def test_generator_returns_iterator(self) -> None:
+        """Проверка, что функция возвращает итератор"""
+        result = card_number_generator(1, 5)
+        assert hasattr(result, '__iter__')
+        assert hasattr(result, '__next__')
+
+
+
 ##Модуль conftest
 Модуль содержит фикстуры для функций тестирования
 
-
+ 
 ##Команда
 user.name=Павел Руцкин
 user.email=pavelru163@gmail.com
