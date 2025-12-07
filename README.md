@@ -56,6 +56,67 @@ number_part = card_info_part[-1]
  return sorted(dict_list, key=lambda x: x["date"], reverse=reverse)
 
 
+#Тестирование
+Пакет tests содержит модули для тестирования кодов маскирования и сортировки карт.
+
+##Модуль tests_masks
+Модуль тестирует функции для маркировки номера карты и функции для маскировки аккаунта.
+Пример:
+def test_none_input():
+    """Тестирование None ввода"""
+    assert get_mask_card_number("None") == "None"
+
+def test_get_mask_account_standard():
+    """Тест стандартного случая с полным номером счета"""
+    assert get_mask_account("12345678901234567890") == "**7890"
+
+
+
+##Модуль tests_processing 
+Модуль тестирует функции filter_by_state и sort_by_date.
+Пример:
+def test_only_canceled_transactions(
+    only_canceled_transactions: List[Dict[str, Any]]
+):
+    """Тест с транзакциями только в одном состоянии (не EXECUTED)"""
+    result = filter_by_state(only_canceled_transactions)
+    assert result == []
+
+@pytest.mark.parametrize("reverse,expected_order", [
+        (True, ["2023-03-01", "2023-02-01", "2023-01-01"]),  # по убыванию
+        (False, ["2023-01-01", "2023-02-01", "2023-03-01"]),  # по возрастанию
+    ])
+def test_sort_order(self, reverse, expected_order):
+    """Тестирование правильности порядка сортировки"""
+    dict_list = [
+        {"date": "2023-01-01", "name": "A"},
+        {"date": "2023-03-01", "name": "B"},
+        {"date": "2023-02-01", "name": "C"}
+        ]
+
+    result = sort_by_date(dict_list, reverse)
+    actual_order = [item["date"] for item in result]
+
+    assert actual_order == expected_order
+
+##Модуль tests_widget
+Модуль тестирует функции mask_account_card и get_date.
+Пример:
+def test_visa_card_mask(self, card_data, expected_masked_data):
+    """Тест маскировки номера Visa карты"""
+    result = mask_account_card(card_data["visa_classic"])
+    expected = expected_masked_data["visa_classic"]
+    assert result == expected
+
+def test_basic_date_conversion(self, sample_date_1):
+    """Тест базового преобразования даты"""
+    result = get_date(sample_date_1)
+    assert result == "11.03.2024"
+
+##Модуль conftest
+Модуль содержит фикстуры для функций тестирования
+
+
 ##Команда
 user.name=Павел Руцкин
 user.email=pavelru163@gmail.com

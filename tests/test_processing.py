@@ -1,7 +1,10 @@
-import pytest
-from src.processing import filter_by_state, sort_by_date
-from typing import List, Dict, Any
 from datetime import date
+from typing import Any, Dict, List
+
+import pytest
+
+from src.processing import filter_by_state, sort_by_date
+
 
 class TestFilterByState:
     """Тесты для функции filter_by_state"""
@@ -25,7 +28,7 @@ class TestFilterByState:
 
 def test_only_canceled_transactions(
     only_canceled_transactions: List[Dict[str, Any]]
-    ):
+):
     """Тест с транзакциями только в одном состоянии (не EXECUTED)"""
     result = filter_by_state(only_canceled_transactions)
     assert result == []
@@ -115,4 +118,3 @@ class TestSortByDate:
         actual_order = [item["date"] for item in result]
 
         assert actual_order == expected_order
-
