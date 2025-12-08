@@ -5,7 +5,7 @@ import pytest
 
 
 @pytest.fixture
-def card_numbers_with_spaces():
+def card_numbers_with_spaces() -> Any:
     """Фикстура для номеров с различным количеством пробелов"""
     return [("70007922 89606361", "7000 79** **** 6361"),
             ("70 00 79 22 89 60 63 61", "7000 79** **** 6361"),
@@ -13,7 +13,7 @@ def card_numbers_with_spaces():
 
 
 @pytest.fixture
-def account_number_and_expected():
+def account_number_and_expected() -> Any:
     """Фикстура с парами (номер счета, ожидаемая маска)"""
     return [
         ("12345678901234567890", "**7890"),
@@ -26,7 +26,7 @@ def account_number_and_expected():
 
 
 @pytest.fixture
-def card_data():
+def card_data() -> Any:
     """Фикстура с тестовыми данными карт"""
     return {
         "visa_classic": "Visa Classic 1234567812345678",
@@ -38,7 +38,7 @@ def card_data():
 
 
 @pytest.fixture
-def expected_masked_data():
+def expected_masked_data() -> Any:
     """Фикстура с ожидаемыми результатами маскирования"""
     return {
         "visa_classic": "Visa Classic 1234 56** **** 5678",
@@ -50,13 +50,13 @@ def expected_masked_data():
 
 
 @pytest.fixture
-def sample_date_1():
+def sample_date_1() -> Any:
     """Фикстура с примером даты"""
     return "2024-03-11T02:26:18.671407"
 
 
 @pytest.fixture
-def sample_date_3():
+def sample_date_3() -> Any:
     """Фикстура с датой с однозначными числами"""
     return "2024-01-01T00:00:00.000000"
 
@@ -98,7 +98,7 @@ def sample_transactions() -> List[Dict[str, Any]]:
 
 
 @pytest.fixture
-def sample_dict_list():
+def sample_dict_list() -> Any:
     """Фикстура предоставляет тестовые данные для сортировки по дате"""
     return [
         {"date": date(2023, 1, 15), "name": "Item A", "value": 10},
@@ -110,7 +110,7 @@ def sample_dict_list():
 
 
 @pytest.fixture
-def sample_card_numbers():
+def sample_card_numbers() -> Any:
     """Фикстура с тестовыми номерами карт"""
     return {
         "visa_16": "4000123456789010",
@@ -124,7 +124,7 @@ def sample_card_numbers():
 
 
 @pytest.fixture
-def expected_masked_results():
+def expected_masked_results() -> Any:
     """Фикстура с ожидаемыми результатами маскирования"""
     return {
         "visa_16": "4000 12** **** 9010",
@@ -138,7 +138,7 @@ def expected_masked_results():
 
 
 @pytest.fixture
-def edge_case_card_numbers():
+def edge_case_card_numbers() -> Any:
     """Фикстура с граничными случаями"""
     return {
         "0000000000000000": "0000 00** **** 0000",
@@ -146,3 +146,99 @@ def edge_case_card_numbers():
         "1234": "1234",  # короткий номер
         "12345678901234567890": "1234 56** **** 5678 7890",  # длинный номер
     }
+
+
+"Фикстуры для генераторов"
+
+
+@pytest.fixture
+def transactions_fixture() -> Any:
+    return [
+        {
+            "id": 441945886,
+            "state": "EXECUTED",
+            "date": "2019-08-26T10:50:58.294041",
+            "operationAmount": {
+                "amount": "31957.58",
+                "currency": {
+                    "name": "RUB",
+                    "code": "RUB"
+                }
+            },
+            "description": "Перевод организации",
+            "from": "Maestro 1596837868705199",
+            "to": "Счет 64686473678894779589"
+        },
+        {
+            "id": 939719570,
+            "state": "EXECUTED",
+            "date": "2018-06-30T02:08:58.425572",
+            "operationAmount": {
+                "amount": "9824.07",
+                "currency": {
+                    "name": "USD",
+                    "code": "USD"
+                }
+            },
+            "description": "Перевод организации",
+            "from": "Счет 75106830613657916952",
+            "to": "Счет 11776614605963066702"
+                },
+        {
+            "id": 142264268,
+            "state": "EXECUTED",
+            "date": "2019-04-04T23:20:05.206878",
+            "operationAmount": {
+                "amount": "79114.93",
+                "currency": {
+                    "name": "USD",
+                    "code": "USD"
+                }
+            },
+            "description": "Перевод со счета на счет",
+            "from": "Счет 19708645243227258542",
+            "to": "Счет 75651667383060284188"
+        }]
+
+
+"Для transaction_descriptions"
+
+
+@pytest.fixture
+def sample_transactions1() -> Any:
+    """Фикстура с обычными транзакциями"""
+    return [
+        {'id': 1, 'description': 'Покупка', 'amount': 100, 'currency': 'RUB'},
+        {'id': 2, 'description': 'Продажа', 'amount': 200, 'currency': 'USD'},
+        {'id': 3, 'description': 'Перевод', 'amount': 50, 'currency': 'EUR'},
+    ]
+
+
+@pytest.fixture
+def empty_transactions1() -> Any:
+    """Фикстура с пустым списком транзакций"""
+    return []
+
+
+@pytest.fixture
+def mixed_transactions() -> Any:
+    """Фикстура со смешанными транзакциями (с description и без)"""
+    return [
+        {'id': 1, 'amount': 100},
+        {'id': 2, 'description': 'Покупка в магазине', 'amount': 200},
+        {'id': 3, 'amount': 300, 'date': '2024-01-01'},
+        {'id': 4, 'description': 'Оплата интернета', 'amount': 400},
+    ]
+
+
+"Фикстуры для card_number_generator"
+
+
+@pytest.fixture
+def edge_case_ranges() -> Any:
+    """Фикстура для граничных случаев"""
+    return [
+        (0, 9999),  # Много чисел
+        (9999999999990000, 9999999999999999),  # Конец диапазона
+        (-100, 100),  # С отрицательными числами
+    ]
