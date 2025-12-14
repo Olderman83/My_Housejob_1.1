@@ -1,5 +1,4 @@
 import functools
-import sys
 from datetime import datetime
 from typing import Callable, Any
 
@@ -58,5 +57,3 @@ def log(filename: str = None) -> Callable:
         return wrapper
 
     return decorator
-
-

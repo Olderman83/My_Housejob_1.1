@@ -1,6 +1,8 @@
-import pytest
 import os
 import tempfile
+
+import pytest
+
 from src.decorators import log
 
 
@@ -58,10 +60,11 @@ def test_log_to_file_success():
     """Тест успешного выполнения с логированием в файл"""
 
     # Создаем временный файл
-    with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.txt') as tmp:
+    with tempfile.NamedTemporaryFile(mode="w", delete=False, suffix=".txt") as tmp:
         filename = tmp.name
 
     try:
+
         @log(filename=filename)
         def multiply(x, y):
             return x * y
@@ -72,7 +75,7 @@ def test_log_to_file_success():
         assert result == 12
 
         # Проверяем запись в файл
-        with open(filename, 'r', encoding='utf-8') as f:
+        with open(filename, "r", encoding="utf-8") as f:
             content = f.read()
             assert "multiply ok" in content
     finally:
@@ -83,10 +86,11 @@ def test_log_to_file_success():
 def test_log_to_file_error():
     """Тест ошибки с логированием в файл"""
 
-    with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.txt') as tmp:
+    with tempfile.NamedTemporaryFile(mode="w", delete=False, suffix=".txt") as tmp:
         filename = tmp.name
 
     try:
+
         @log(filename=filename)
         def raise_value_error(num):
             if num < 0:
@@ -98,7 +102,7 @@ def test_log_to_file_error():
             raise_value_error(-1)
 
         # Проверяем запись в файл
-        with open(filename, 'r', encoding='utf-8') as f:
+        with open(filename, "r", encoding="utf-8") as f:
             content = f.read()
             assert "raise_value_error error" in content
             assert "ValueError" in content
@@ -112,20 +116,21 @@ def test_log_to_file_error():
 def test_log_to_file_multiple_calls():
     """Тест нескольких вызовов с логированием в файл"""
 
-    with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.txt') as tmp:
+    with tempfile.NamedTemporaryFile(mode="w", delete=False, suffix=".txt") as tmp:
         filename = tmp.name
 
     try:
+
         @log(filename=filename)
         def power(base, exponent=2):
-            return base ** exponent
+            return base**exponent
 
         # Делаем несколько вызовов
         assert power(2) == 4
         assert power(3, 3) == 27
 
         # Проверяем, что все вызовы записаны
-        with open(filename, 'r', encoding='utf-8') as f:
+        with open(filename, "r", encoding="utf-8") as f:
             lines = f.readlines()
             assert len(lines) == 2
             assert all("power ok" in line for line in lines)
@@ -144,7 +149,4 @@ def test_log_preserves_function_metadata():
     # Проверяем сохранение метаданных
     assert example_func.__name__ == "example_func"
     assert example_func.__doc__ == "Example function for testing."
-    assert example_func.__annotations__ == {'a': int, 'b': int, 'return': int}
-
-
-
+    assert example_func.__annotations__ == {"a": int, "b": int, "return": int}
