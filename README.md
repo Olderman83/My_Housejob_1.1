@@ -137,7 +137,24 @@ filter_by_currency, transaction_descriptions, card_number_generator
         assert hasattr(result, '__iter__')
         assert hasattr(result, '__next__')
 
+#Декорирование
 
+Модуль содержит декоратор `log` для логирования выполнения функций.
+
+##Использование
+
+`python
+from decorators import log
+
+#Примеры:
+@log()
+def my_function(x, y):
+    return x + y
+
+
+@log("myapp.log")
+def another_function(x):
+    return x * 2
 
 ##Модуль conftest
 Модуль содержит фикстуры для функций тестирования

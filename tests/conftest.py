@@ -1,5 +1,7 @@
 from datetime import date
 from typing import Any, Dict, List
+from src.decorators import log
+
 
 import pytest
 
@@ -242,3 +244,40 @@ def edge_case_ranges() -> Any:
         (9999999999990000, 9999999999999999),  # Конец диапазона
         (-100, 100),  # С отрицательными числами
     ]
+
+
+@log()
+def add(a, b):
+    """Складывает два числа"""
+    return a + b
+
+
+# Пример 2: Логирование в файл
+@log(filename="operations.log")
+def divide(a, b):
+    """Делит a на b"""
+    return a / b
+
+
+# Пример 3: Функция, которая может вызвать ошибку
+@log(filename="errors.log")
+def process_data(data):
+    """Обрабатывает данные"""
+    if not data:
+        raise ValueError("Data cannot be empty")
+    return len(data)
+
+
+if __name__ == "__main__":
+    # Успешные операции
+    print("Результат сложения:", add(10, 20))
+    print("Результат деления:", divide(100, 5))
+
+    # Операция с ошибкой
+    try:
+        process_data([])
+    except ValueError as e:
+        print(f"Поймано исключение: {e}")
+
+    # Успешная обработка данных
+    print("Длина данных:", process_data([1, 2, 3, 4, 5]))
