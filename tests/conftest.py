@@ -1,9 +1,9 @@
 from datetime import date
 from typing import Any, Dict, List
-from src.decorators import log
-
 
 import pytest
+
+from src.decorators import log
 
 
 @pytest.fixture
