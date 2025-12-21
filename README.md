@@ -159,6 +159,23 @@ def another_function(x):
 ##Модуль conftest
 Модуль содержит фикстуры для функций тестирования
 
+#Библиотеки
+
+Модуль содержит модули utils external.api читающие JSON-файл и возвращает список словарей с данными о транзакциях.
+            Если файл пустой, содержит не список или не найден, возвращается пустой список.И конвертируют сумму 
+транзакции в рубли.
+Содержит файлы для тестирования test_external_api.py и test_utils.py
+Примеры: 
+def test_convert_to_rubles_missing_amount():
+    """Тест при отсутствии суммы."""
+    transaction = {"currency": "RUB"}
+    result = convert_to_rubles(transaction)
+    assert result == 0.0
+
+def test_read_json_file_not_found():
+    """Тест для несуществующего файла."""
+    result = read_json_file("/nonexistent/path/file.json")
+    assert result == []
  
 ##Команда
 user.name=Павел Руцкин
