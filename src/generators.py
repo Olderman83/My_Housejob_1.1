@@ -1,4 +1,5 @@
-from typing import List, Any, Iterator
+from typing import Any, Iterator, List
+
 
 def filter_by_currency(list_transactions: list, currency: str) -> Iterator:
     """Функция принимает на вход список словарей, представляющих транзакции

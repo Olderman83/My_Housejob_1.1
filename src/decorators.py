@@ -1,6 +1,6 @@
 import functools
 from datetime import datetime
-from typing import Callable, Any
+from typing import Any, Callable
 
 
 def log(filename: str = None) -> Callable:
