@@ -3,9 +3,19 @@ import logging
 import os
 from typing import Any, Dict, List
 
+
 # Настройка логирования
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
+logger = logging.getLogger("utils")
+logger.setLevel(logging.DEBUG)
+file_handler = logging.FileHandler('logs/utils.log', mode='w')
+file_formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    datefmt='%Y-%m-%d %H:%M:%S')
+file_handler.setFormatter(file_formatter)
+file_handler.setLevel(logging.DEBUG)
+logger.addHandler(file_handler)
+
+logger.info(f"Успешно вычислена сумма")
+logger.error(f"Произошла ошибка: ValueError")
 
 
 def read_json_file(file_path: str) -> List[Dict[str, Any]]:
