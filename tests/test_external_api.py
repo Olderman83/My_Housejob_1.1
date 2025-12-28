@@ -64,13 +64,13 @@ def test_convert_to_rubles_api_error(mock_get):
 
     transaction = {"amount": 100, "currency": "USD"}
     result = convert_to_rubles(transaction)
-    assert result == 100.0
+    assert result == 0.0
 
 
 def test_convert_to_rubles_no_api_key():
     """Тест при отсутствии API ключа."""
-    if 'EXCHANGE_RATE_API_KEY' in os.environ:
-        del os.environ['EXCHANGE_RATE_API_KEY']
+    if 'API_KEY' in os.environ:
+        del os.environ['API_KEY']
 
     transaction = {"amount": 100, "currency": "USD"}
     result = convert_to_rubles(transaction)

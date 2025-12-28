@@ -32,9 +32,8 @@ def convert_to_rubles(transaction: Dict[str, Any]) -> float:
             return float(amount)
 
         # Получаем API ключ
-        api_key = os.getenv('EXCHANGE_RATE_API_KEY')
-        api_url = os.getenv('EXCHANGE_RATE_API_URL',
-                            'https://api.apilayer.com/exchangerates_data/latest')
+        api_key = os.getenv('API_KEY')
+        api_url = os.getenv('API_URL')
 
         if not api_key:
             logger.error("API ключ не найден. Проверьте файл .env")
@@ -42,7 +41,7 @@ def convert_to_rubles(transaction: Dict[str, Any]) -> float:
 
         # Получаем курс валюты
         headers = {"apikey": api_key}
-        params = {"base": currency, "symbols": "RUB"}
+        params = {"to": "RUB", "from": currency, "amount": amount}
 
         try:
             response = requests.get(api_url, headers=headers, params=params, timeout=10)

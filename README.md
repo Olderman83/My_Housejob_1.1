@@ -177,6 +177,22 @@ def test_read_json_file_not_found():
     result = read_json_file("/nonexistent/path/file.json")
     assert result == []
  
+#Модуль работы с библиотеками
+
+Модуль содержит два файла с данными операций в форматах CSV и EXCEL,файл с функция чтения этих форматов и файл тестирования функций
+Загружены pandas и openpyxl
+Пример:
+def test_read_csv_file_not_found(self):
+    """Тест ошибки при отсутствии файла."""
+    with pytest.raises(FileNotFoundError):
+        read_csv_file('nonexistent.csv')
+
+def test_read_excel_file_not_found(self):
+    """Тест ошибки при отсутствии файла."""
+    with pytest.raises(FileNotFoundError):
+        read_excel_file('nonexistent.xlsx')
+
+
 ##Команда
 user.name=Павел Руцкин
 user.email=pavelru163@gmail.com
