@@ -1,7 +1,6 @@
 import csv
 import pandas as pd
-from typing import List, Dict, Any, Optional
-
+from typing import List, Dict, Any
 
 
 def read_csv_file(file_path: str) -> List[Dict[str, Any]]:
@@ -71,6 +70,3 @@ def read_excel_file(file_path: str) -> List[Dict[str, Any]]:
         raise ValueError(f"Отсутствует обязательная колонка в Excel файле: {e}")
     except Exception as e:
         raise ValueError(f"Ошибка при чтении Excel файла: {e}")
-
-
-
