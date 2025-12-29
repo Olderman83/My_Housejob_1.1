@@ -1,20 +1,43 @@
 from typing import Any, Dict, List
 
 
-def filter_by_state(transactions: List[Dict], state: str = "EXECUTED") -> List[Dict]:
-    """Функция принимает список словарей и опционально значение для ключа "state" (по умолчанию
-    'EXECUTED'). Возвращает новый список словарей, содержащий только те словари, у которых ключ
-    "state" соответствует указанному значению"""
+def filter_by_state(transactions: List[Dict[str, Any]], state: str = "EXECUTED") -> List[Dict[str, Any]]:
+    """
+    Фильтрует транзакции по статусу.
 
-    filtered_list = []
+    :param transactions: Список транзакций
+    :param state: Статус для фильтрации (по умолчанию "EXECUTED")
+    :return: Отфильтрованный список транзакций
+    """
+    filtered_transactions = []
+
     for transaction in transactions:
-        if transaction ["state"] == state:
-            filtered_list.append(transaction)
-    return filtered_list
+        # Проверяем наличие ключа 'state' в транзакции
+        if "state" in transaction and transaction["state"] == state:
+            filtered_transactions.append(transaction)
+
+    return filtered_transactions
 
 
-def sort_by_date(dict_list: List[Dict[str, Any]], reverse: bool = True) -> List[Dict[str, Any]]:
-    """Функция принимает список словарей и необязательный параметр, задающий порядок сортировки
-    (по умолчанию — убывание). Возвращает новый список, отсортированный по дате"""
-    return sorted(dict_list, key=lambda x: x["date"], reverse=reverse)
+def sort_by_date(transactions: List[Dict[str, Any]], reverse: bool = True) -> List[Dict[str, Any]]:
+    """
+    Сортирует транзакции по дате.
 
+    :param transactions: Список транзакций
+    :param reverse: Флаг обратной сортировки (по умолчанию True - по убыванию)
+    :return: Отсортированный список транзакций
+    """
+    # Фильтруем транзакции, у которых есть дата
+    transactions_with_date = [t for t in transactions if "date" in t]
+
+    # Сортируем по дате
+    sorted_transactions = sorted(
+        transactions_with_date,
+        key=lambda x: x["date"],
+        reverse=reverse
+    )
+
+    # Добавляем транзакции без даты в конец
+    transactions_without_date = [t for t in transactions if "date" not in t]
+
+    return sorted_transactions + transactions_without_date

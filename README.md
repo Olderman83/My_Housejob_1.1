@@ -192,7 +192,25 @@ def test_read_excel_file_not_found(self):
     with pytest.raises(FileNotFoundError):
         read_excel_file('nonexistent.xlsx')
 
+##Модуль содержит файл bank_operations с функциями process_bank_operations и process_bank_search,которые 
+ищут транзакции по заданной строке в описании с использованием регулярных выражений и подсчитывает количество 
+банковских операций определенных категорий.Так же содержит файл с тестами к ним.
+Пример:
+def test_process_bank_search_partial_match(sample_transactions):
+    result = process_bank_search(sample_transactions, "карт")
+    assert len(result) == 1
+    assert result[0]["id"] == 2
 
+
+def test_process_bank_operations(sample_transactions):
+    categories = ["Перевод организации", "Оплата услуг"]
+    result = process_bank_operations(sample_transactions, categories)
+
+    assert "Перевод организации" in result
+    assert result["Перевод организации"] == 2
+    assert "Оплата услуг" in result
+    assert result["Оплата услуг"] == 1
+#Файл main для запуска взаимосвязей функций
 ##Команда
 user.name=Павел Руцкин
 user.email=pavelru163@gmail.com
